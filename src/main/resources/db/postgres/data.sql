@@ -1,0 +1,1 @@
+INSERT INTO customers (first_name, last_name) SELECT 'John', 'Doe' WHERE NOT EXISTS (SELECT * FROM customers WHERE id=1);
