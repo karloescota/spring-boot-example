@@ -1,1 +1,1 @@
-INSERT INTO customers (first_name, last_name) SELECT 'John', 'Doe' WHERE NOT EXISTS (SELECT * FROM customers WHERE id=1);
+INSERT INTO customers (card_number, first_name, last_name) SELECT '123', 'John', 'Doe' WHERE NOT EXISTS (SELECT * FROM customers WHERE id=1);

@@ -11,36 +11,33 @@ import java.util.Optional;
 public class CustomerController {
 
     @Autowired
-    private CustomerRepository customers;
+    private CustomerRepository customerRepo;
+
+    @Autowired
+    private CRM crm;
 
     @GetMapping
     List<Customer> listCustomers() {
-        return customers.findAll();
+        return crm.listCustomers(); // note: sample using Service
     }
 
     @GetMapping("/{id}")
     Optional<Customer> getCustomer(@PathVariable Integer id) {
-        return customers.findById(id);
+        return customerRepo.findById(id); // note: sample using Repo
     }
 
     @PostMapping
-    Customer createCustomer(@RequestBody Customer newCustomer) {
-        return customers.save(newCustomer);
+    Customer createCustomer(@RequestBody Customer customer) {
+        return customerRepo.save(customer);
     }
 
     @PutMapping("/{id}")
-    Customer updateCustomer(@RequestBody Customer newCustomer, @PathVariable Integer id) {
-        return customers.findById(id)
-                .map(customer -> {
-                    customer.setFirstName(newCustomer.getFirstName());
-                    customer.setLastName(newCustomer.getLastName());
-                    return customers.save(customer);
-                })
-                .orElseGet(() -> newCustomer); // ? should be not found
+    Customer updateCustomer(@RequestBody Customer customer, @PathVariable Integer id) {
+        return crm.updateCustomer(id, customer);
     }
 
     @DeleteMapping("/{id}")
     void deleteCustomer(@PathVariable Integer id) {
-        customers.deleteById(id);
+        customerRepo.deleteById(id);
     }
 }
