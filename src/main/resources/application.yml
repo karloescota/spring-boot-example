@@ -1,4 +1,3 @@
-database: postgres
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
@@ -7,14 +6,23 @@ spring:
   application:
     name: Example
   jpa:
-    hibernate:
-      ddl-auto: none
+    defer-datasource-initialization: true
+    # hibernate:
+    #   ddl-auto: none
     open-in-view: true
+    # properties: # https://www.baeldung.com/spring-data-jpa-generate-db-schema
+    #   javax:
+    #     persistence:
+    #       schema-generation:
+    #         scripts:
+    #           action: create
+    #           create-target: create.sql
+    #           create-source: metadata
+    #           drop-source: metadata
   sql:
     init:
-      mode: always
+      mode: always # note: set to `always` to init db, `never` after
       schema-locations: classpath*:db/postgres/schema.sql
       data-locations: classpath*:db/postgres/data.sql
 server:
   port: 8084
-
